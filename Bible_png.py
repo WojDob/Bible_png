@@ -29,7 +29,7 @@ def clean_text(text):
 
 
 def compute_rgb(coded_word, num_unique_words):
-    C = coded_word * numpy.floor((256 * 256) / num_unique_words)
+    C = coded_word * numpy.floor((256 * 256 * 256) / num_unique_words)
     R = C // (256**2)
     G = (C // 256) % 256
     B = C % 256

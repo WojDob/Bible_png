@@ -3,7 +3,7 @@
 
 This Python script visualizes textual data of the King James Bible, which is obtained from Project Gutenberg, by mapping each unique word in a text to a unique RGB color and creating an image from these colors. 
 
-If you ever wondered what is the color of God, it's `RGB 0, 196, 24`.
+If you ever wondered what is the color of God, it's `RGB 175, 78, 114`.
 
 ## How to Use
 Clone this repository, then install the dependencies using pip:
