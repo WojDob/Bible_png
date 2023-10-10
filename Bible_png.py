@@ -1,11 +1,15 @@
-from string import digits, punctuation
 from PIL import Image
-import requests
 import numpy
+import requests
+import string
 
 URL = "https://www.gutenberg.org/cache/epub/10/pg10.txt"
-TXT_START = "*** START OF THE PROJECT GUTENBERG EBOOK THE KING JAMES BIBLE ***"
-TXT_END = "*** END OF THE PROJECT GUTENBERG EBOOK THE KING JAMES BIBLE ***"
+TXT_START = (
+    "*** START OF THE PROJECT GUTENBERG EBOOK THE KING JAMES VERSION OF THE BIBLE ***"
+)
+TXT_END = (
+    "*** END OF THE PROJECT GUTENBERG EBOOK THE KING JAMES VERSION OF THE BIBLE ***"
+)
 
 
 def extract_book_content(text, start_marker, end_marker):
@@ -14,11 +18,12 @@ def extract_book_content(text, start_marker, end_marker):
         end = text.index(end_marker)
         return text[start:end]
     except ValueError:
-        return ""
+        print("Start or end marker not found in text.")
+        exit()
 
 
 def clean_text(text):
-    remove_nonletters = str.maketrans("", "", punctuation + digits)
+    remove_nonletters = str.maketrans("", "", string.punctuation + string.digits)
     return (
         text.replace("\\r", "")
         .replace("\\n", "")
@@ -58,8 +63,13 @@ def text_to_image(text):
                 return data
 
 
-response = requests.get(URL).content.decode("utf-8")
-Bible = extract_book_content(response, TXT_START, TXT_END)
-Bible = clean_text(Bible)
-image = Image.fromarray(text_to_image(Bible))
-image.save("BIBLE.png")
+def main():
+    response = requests.get(URL).content.decode("utf-8")
+    Bible = extract_book_content(response, TXT_START, TXT_END)
+    Bible = clean_text(Bible)
+    image = Image.fromarray(text_to_image(Bible))
+    image.save("BIBLE.png")
+
+
+if __name__ == "__main__":
+    main()
